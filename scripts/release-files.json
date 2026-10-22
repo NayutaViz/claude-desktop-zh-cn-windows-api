@@ -3,6 +3,8 @@
   "还原汉化.cmd",
   "检查状态.cmd",
   "README.md",
+  "docs/images/screenshot_01.jpg",
+  "docs/images/screenshot_02.jpg",
   "LICENSE",
   "lib/patch.cjs",
   "lib/ui-patcher.cjs",

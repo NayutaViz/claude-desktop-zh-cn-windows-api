@@ -1,4 +1,4 @@
-# Claude Desktop Windows API 客户端汉化
+# Claude Desktop zh-CN · Windows API 客户端汉化
 
 面向 **Windows Claude Desktop 第三方 API／网关模式**的简体中文界面补丁。
 
@@ -6,9 +6,16 @@
 
 > 本项目是非官方界面补丁，不是独立客户端，也不提供 API、网关、账号或登录能力。
 
+## 界面预览
+
+![API 模式主界面](docs/images/screenshot_01.jpg)
+
+![Claude Code 设置](docs/images/screenshot_02.jpg)
+
 ## 特点
 
 - **聚焦中文界面**：包含简体中文词库，并补译前端程序中的部分固定英文；内置输出风格显示为“简洁、解释型、学习型、主动型”，保存时仍使用原始标识。
+- **英文命令，中文说明**：保留 `/compact`、`/model` 等斜杠命令的名称、别名和参数，在菜单中显示已收录说明的中文译文；未知说明及自定义内容保留原文。
 - **离线安装**：词库和解析器随包提供，安装时不下载资源、不调用翻译服务。
 - **两种安装方式**：可保留原件以便还原，也可选择不保留原件备份。
 - **文件集中管理**：备份和状态放在补丁目录的 `.state` 中，不另建 `%LOCALAPPDATA%\ClaudeZhPatch`。
@@ -31,7 +38,7 @@
 
 ## 安装
 
-1. 下载 [最新 Release](https://github.com/NayutaViz/claude-desktop-windows-api-zh/releases/latest) 中的运行包，**完整解压**到一个长期保留、可写入的本地目录。
+1. 下载 [最新 Release](https://github.com/NayutaViz/claude-desktop-zh-cn-windows-api/releases/latest) 中的运行包，**完整解压**到一个长期保留、可写入的本地目录。
 2. 保存工作，并从 Claude 菜单退出应用。仅关闭窗口可能仍在后台运行。
 3. 双击 **`安装汉化.cmd`**，选择安装方式。
 4. 完成后重新打开 Claude。
@@ -74,7 +81,7 @@
 ## 文件与备份
 
 ```text
-claude-desktop-windows-api-zh/
+claude-desktop-zh-cn-windows-api/
   安装汉化.cmd
   还原汉化.cmd
   检查状态.cmd
@@ -95,7 +102,7 @@ claude-desktop-windows-api-zh/
 
 ## 工作原理与覆盖范围
 
-补丁安装 `zh-Hans` 中文语言资源，注册前端语言列表，并使用 Acorn 解析 JavaScript，在已知显示属性、条件分支、数组和模板字符串中替换收录的文案。内置输出风格只处理显示名称；自定义风格保持原名。HTML 标签白名单、工具参数说明和内部状态标识不作为界面文案处理。配置只改 `locale` 字段，不保存完整用户配置。
+项目对外使用 `zh-CN` 名称；为兼容 Claude 的语言加载机制，补丁内部仍安装 `zh-Hans` 中文语言资源，注册前端语言列表，并使用 Acorn 解析 JavaScript，在已知显示属性、条件分支、数组和模板字符串中替换收录的文案。内置输出风格只处理显示名称；自定义风格保持原名。HTML 标签白名单、工具参数说明和内部状态标识不作为界面文案处理。配置只改 `locale` 字段，不保存完整用户配置。
 
 修改范围为安装目录中的外置语言资源、前端 JavaScript 和用户配置的语言字段；**不改 `Claude.exe` 或 `app.asar`**。
 

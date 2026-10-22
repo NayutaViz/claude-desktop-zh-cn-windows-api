@@ -1,5 +1,22 @@
 const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm');
 const {createTranslator}=require('../lib/ui-patcher.cjs');
+test('slash menu keeps English names and protocol data while translating displayed descriptions',()=>{
+ const descriptions=require('../lib/translations.json').slashDescriptions;
+ const translate=createTranslator({compact:'压缩'},descriptions);
+ const code='const CCDSlashCommandMenu=true;const r={name:"compact",description:"Free up context by summarizing the conversation so far",argumentHint:"[instructions]",aliases:["summarize"]};const row={type:"skill",skillId:r.name,label:r.name,skillDescription:r.description??"",argumentHint:r.argumentHint,aliases:r.aliases};({row,r})';
+ const output=translate(code).text,result=vm.runInNewContext(output);
+ assert.equal(result.row.label,'compact');assert.equal(result.row.skillId,'compact');
+ assert.equal(result.row.skillDescription,'总结当前对话，释放上下文空间');
+ assert.equal(result.r.description,'Free up context by summarizing the conversation so far');
+ assert.equal(result.row.argumentHint,'[instructions]');assert.equal(result.row.aliases[0],'summarize');
+ assert.equal(translate(output).text,output);
+ for(const custom of ['My own skill description','toString','__proto__']){
+  const customCode=code.replace('Free up context by summarizing the conversation so far',custom);
+  assert.equal(vm.runInNewContext(translate(customCode).text).row.skillDescription,custom);
+ }
+ const staticName='const row={type:"skill",skillId:"compact",label:"compact",skillDescription:"description"}';
+ assert.equal(translate(staticName).text,staticName);
+});
 test('display branches translate without touching identifiers and ordinary strings',()=>{
  const translate=createTranslator({Settings:'设置',Open:'打开',Close:'关闭'});
  const input='const id="Settings"; const x=jsx("div",{type:"Open",title:ok?"Open":"Close",children:["Settings"]});';
