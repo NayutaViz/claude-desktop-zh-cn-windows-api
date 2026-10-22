@@ -38,6 +38,15 @@ test('no-backup mode has no originals or stored old locale, repeat works, restor
  run('install-no-backup',f.options);assert.throws(()=>run('restore',f.options),/不备份/);
  assert.throws(()=>run('install',f.options),/不备份/);
 });
+test('restore verifies but does not rewrite a resource already equal to its original',t=>{
+ const f=fixture(t);run('install',f.options);
+ f.write('ion-dist/assets/test.js',f.original);
+ const rename=fs.renameSync,writes=[];
+ t.mock.method(fs,'renameSync',(src,dest)=>{writes.push(dest);return rename(src,dest);});
+ run('restore',f.options);
+ assert.ok(!writes.includes(p.join(f.root,'ion-dist/assets/test.js')));
+ assert.equal(fs.readFileSync(p.join(f.root,'ion-dist/assets/test.js'),'utf8'),f.original);
+});
 test('no-backup refuses conflicting revision or interrupted state',t=>{
  const f=fixture(t);run('install-no-backup',f.options);const m=f.manifest();m.patchHash='different';
  fs.writeFileSync(p.join(f.folder(),'manifest.json'),JSON.stringify(m));
