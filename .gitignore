@@ -1,0 +1,8 @@
+.state/
+.review/
+dist/
+node_modules/
+*.claudezh-tmp
+*.log
+.DS_Store
+Thumbs.db

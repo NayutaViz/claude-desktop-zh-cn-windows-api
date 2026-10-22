@@ -1,0 +1,14 @@
+[
+  "安装汉化.cmd",
+  "还原汉化.cmd",
+  "检查状态.cmd",
+  "README.md",
+  "LICENSE",
+  "lib/patch.cjs",
+  "lib/ui-patcher.cjs",
+  "lib/launch.ps1",
+  "lib/translations.json",
+  "lib/acorn.cjs",
+  "lib/ACORN-LICENSE.txt",
+  "lib/THIRD-PARTY-LICENSE.txt"
+]
